@@ -36,7 +36,7 @@ class Ssh:
 class sso_maxdrswitch(restful.Resource):
 
     def get(self):
-        db = MySQLdb.connect("192.168.37.58","DBmonitor","DBmonitor@60","practices")
+        db = MySQLdb.connect("192.168.37.58", "DBmonitor", "DBmonitor@60", "practices")
         cursor = db.cursor()
 
         sql = "select vip_address from drdbinfra where project_name='JSSO' and service_type='Maxscale' and current_status='prod_location'"
@@ -74,8 +74,6 @@ class sso_maxdrswitch(restful.Resource):
         # ssh conn to 33.185 and run command to check lag
         lst = []
         for i in drlst:
-            result = ''
-            hlth_chk = ''
             my_dct = {}
             connection = Ssh("192.169.33.185")
             command = '/usr/bin/mysql -P 3309 -h%s -uDBmonitor -p"DBmonitor@60" -Bse "show slave status\G"|grep "Seconds_Behind_Master:"|awk "{print \$2}"' % i

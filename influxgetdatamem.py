@@ -1,15 +1,10 @@
 from influxdb import InfluxDBClient
-from flask import Flask, jsonify, abort, make_response
+from flask import jsonify, make_response
 from flask import request
-from flask import render_template
 import flask_restful as restful
-import pymongo, yaml, sys, json
-from get_srv_location import getloc
 from get_node import getnode
 import metricolumns
 import commands
-from user import requires_auth
-import re
 import json
 
 class Influxgetdatamem(restful.Resource):
@@ -17,7 +12,7 @@ class Influxgetdatamem(restful.Resource):
     def __init__(self):
                 self.client = InfluxDBClient('192.168.37.253', 8086, '', '', 'telegraf')
 
-    #@requires_auth
+
     def post(self):
         try:
             if 'Content-Type' not in request.headers:

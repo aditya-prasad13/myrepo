@@ -1,10 +1,13 @@
 #!/usr/bin/python
 
-from flask import jsonify, make_response
+from flask import Flask, jsonify, abort, make_response
 from flask import request
+from flask import render_template
 import flask_restful as restful
+import pymongo, yaml, sys, json
 import requests
 import MySQLdb
+import re
 from paramiko import client
 from pymongo import MongoClient
 
@@ -37,7 +40,7 @@ class Ssh:
             return "Connection not opened."
 
 
-class Checkdrhealth_sso(restful.Resource):
+class CheckDRhealth_sso(restful.Resource):
     # @requires_auth
     def post(self):
         try:
@@ -55,7 +58,7 @@ class Checkdrhealth_sso(restful.Resource):
         except Exception as e:
             print e
 
-    def getdrhealth_sso(self):
+    def getDRhealth_sso(self):
         Health_All = []
 
         ## Check MariaDB Health
